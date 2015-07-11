@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var stylus = require("gulp-stylus");
 var shell = require("gulp-shell");
 var plumber = require("gulp-plumber");
+var minimist = require("minimist");
 
 gulp.task("stylus", function(){
   gulp.src("public/stylesheet/*.styl")
@@ -11,11 +12,13 @@ gulp.task("stylus", function(){
 });
 
 gulp.task("deploy", function(){
+  var args = minimist(process.argv.slice(2));
+  var commitMsg = args.m;
   gulp.src("")
     .pipe(plumber())
     .pipe(shell([
         "git add .",
-        "git commit -m 'Commit With Gulp'",
+        "git commit -m '"+ commitMsg +"'",
         "git push origin master"
       ]));
 });
